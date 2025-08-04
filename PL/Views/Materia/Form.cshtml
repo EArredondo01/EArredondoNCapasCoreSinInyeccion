@@ -1,0 +1,77 @@
+﻿@model ML.Materia
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h1>Formulario Usuarios</h1>
+    <div class="row">
+        @using (Html.BeginForm("Form", "Materia", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(Model => Model.IdMateria)
+
+            <div class="col-md-4">
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.Nombre)
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetras(this, event)", @id="txtNombre" })
+                </div>
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.Nombre)
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetras(this, event)", @id = "txtDescripcion" })
+                </div>
+                @* <div class="col-md-12">
+                    @Html.LabelFor(model => model.Creditos)
+                    @Html.TextBoxFor(model => model.Creditos, "{0:#.#}", new { @class = "form-control" })
+                </div> *@
+
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12 mt-2">
+                    @Html.LabelFor(model => model.Costo)
+                    @Html.TextBoxFor(model => model.Costo, "{0:#.#}", new { @class = "form-control" })
+                </div>
+
+               @*  <div class="col-md-12 mt-2">
+                    @Html.LabelFor(model => model.Semestre)
+                    @Html.DropDownListFor(model => model.Semestre.IdSemestre, new SelectList(Model.Semestre.Semestres, "IdSemestre", "Nombre"), "Seleccione un semestre", new { @class = "form-control" })
+
+                </div> *@
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+
+                <div class="col-md-6">
+                    @Html.ActionLink("Regresar", "GetAll", "Materia", new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<script>
+    function soloLetras(input, event){  // Nombre, Apellido Paterno, Apellido Materno
+       var regex = /^[a-z ]*$/
+       if(regex.test(event.key)){
+           console.log("Paso la regex")
+           $("#txtNombre").css("border", "2px solid green");
+           return true
+       }else{
+            console.log("No paso")
+           $("#txtNombre").css("border", "2px solid red");
+           return false;
+       }    
+    }
+
+    // Validacion para numeros  Celular y telefono
+    // Validacion para username 
+    // validacion CURP, correo  evento onblur
+
+
+
+
+</script>

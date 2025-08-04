@@ -14,5 +14,10 @@ namespace PL.Controllers
             }
             return View(materia);
         }
+
+        public IActionResult Form()
+        {
+            return View();
+        }
     }
 }
