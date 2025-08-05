@@ -14,7 +14,7 @@
             <div class="col-md-4">
                 <div class="col-md-12">
                     @Html.LabelFor(model => model.Nombre)
-                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetras(this, event)", @id="txtNombre" })
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetras(this, event)", onblur = "return soloLetras(this, event)", @id = "txtNombre" })
                 </div>
                 <div class="col-md-12">
                     @Html.LabelFor(model => model.Nombre)
@@ -32,7 +32,7 @@
                     @Html.TextBoxFor(model => model.Costo, "{0:#.#}", new { @class = "form-control" })
                 </div>
 
-               @*  <div class="col-md-12 mt-2">
+                @*  <div class="col-md-12 mt-2">
                     @Html.LabelFor(model => model.Semestre)
                     @Html.DropDownListFor(model => model.Semestre.IdSemestre, new SelectList(Model.Semestre.Semestres, "IdSemestre", "Nombre"), "Seleccione un semestre", new { @class = "form-control" })
 
@@ -48,6 +48,14 @@
                     @Html.ActionLink("Regresar", "GetAll", "Materia", new { @class = "btn btn-danger" })
                 </div>
             </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <input type="text" onblur="validarCorreo(this)" />
+                </div>
+
+            </div>
+
         }
     </div>
 </div>
@@ -55,21 +63,51 @@
 
 <script>
     function soloLetras(input, event){  // Nombre, Apellido Paterno, Apellido Materno
-       var regex = /^[a-z ]*$/
-       if(regex.test(event.key)){
+
+        if(event.type == "keypress"){
+            console.log("keypess")
+            var regex = /^[a-zA-Z ]+$/
+           if(regex.test(event.key)){
+               console.log("Paso la regex")
+               $("#txtNombre").css("border", "2px solid green");
+               return true
+           }else{
+                console.log("No paso")
+               $("#txtNombre").css("border", "2px solid red");
+               return false;
+           }
+        }else if(event.type == "blur"){
+                        console.log("blur")
+            // Validar todo el texto completo
+        }
+
+
+
+    }
+
+
+
+    // Validacion para numeros  Celular y telefono
+    // Validacion para username
+    // validacion CURP, correo  evento onblur
+
+
+        function validarCorreo(input){
+            console.log("@@")
+            console.log(input)
+
+        var regex = /^\b[A-Z0-9._%-]+@@[A-Z.-]+\.[A-Z]{2,4}\b$/i
+
+       if(regex.test($(input).val())){
            console.log("Paso la regex")
-           $("#txtNombre").css("border", "2px solid green");
+           $(input).css("border", "2px solid green");
            return true
        }else{
             console.log("No paso")
-           $("#txtNombre").css("border", "2px solid red");
+           $(input).css("border", "2px solid red");
            return false;
-       }    
+       }
     }
-
-    // Validacion para numeros  Celular y telefono
-    // Validacion para username 
-    // validacion CURP, correo  evento onblur
 
 
 
