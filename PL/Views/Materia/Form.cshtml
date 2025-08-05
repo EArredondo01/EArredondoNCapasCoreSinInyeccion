@@ -15,10 +15,13 @@
                 <div class="col-md-12">
                     @Html.LabelFor(model => model.Nombre)
                     @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetras(this, event)", onblur = "return soloLetras(this, event)", @id = "txtNombre" })
+                    <span></span>
                 </div>
                 <div class="col-md-12">
-                    @Html.LabelFor(model => model.Nombre)
+                    @Html.LabelFor(model => model.Nombre, "Apellido Paterno")
                     @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetras(this, event)", @id = "txtDescripcion" })
+                    <span></span>
+
                 </div>
                 @* <div class="col-md-12">
                     @Html.LabelFor(model => model.Creditos)
@@ -63,25 +66,31 @@
 
 <script>
     function soloLetras(input, event){  // Nombre, Apellido Paterno, Apellido Materno
+            
+        // ENCONTRAR A EL CONTENEDOR DE MI ETIQUETA INPUT
+        var div = $(input).closest("div");
+        var span = div.children("span");
+        // div.find("input");
+        // div.children("span")
 
         if(event.type == "keypress"){
             console.log("keypess")
             var regex = /^[a-zA-Z ]+$/
            if(regex.test(event.key)){
                console.log("Paso la regex")
-               $("#txtNombre").css("border", "2px solid green");
+               $(input).css("border", "2px solid green");
+               span.text("").removeClass("text-danger");
                return true
            }else{
                 console.log("No paso")
-               $("#txtNombre").css("border", "2px solid red");
+               $(input).css("border", "2px solid red");
+               span.text("Solo se acpetan letras").addClass("text-danger");
                return false;
            }
         }else if(event.type == "blur"){
                         console.log("blur")
             // Validar todo el texto completo
         }
-
-
 
     }
 
