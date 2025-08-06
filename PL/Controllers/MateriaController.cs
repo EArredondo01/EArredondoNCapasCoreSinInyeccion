@@ -17,7 +17,16 @@ namespace PL.Controllers
 
         public IActionResult Form()
         {
-            return View();
+            ML.Materia materia = new ML.Materia();
+            materia.Semestre = new ML.Semestre();
+
+            ML.Result result = BL.Materia.GetAllSemestre();
+            if (result.Correct)
+            {
+                materia.Semestre.Semestres = result.Objects;
+            }
+
+            return View(materia);
         }
     }
 }

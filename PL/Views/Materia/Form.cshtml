@@ -7,39 +7,41 @@
 <div class="container">
     <h1>Formulario Usuarios</h1>
     <div class="row">
-        @using (Html.BeginForm("Form", "Materia", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("Form", "Materia", FormMethod.Post, new { @enctype = "multipart/form-data", id = "formulario", onsubmit = "validarFormulario(event)" }))
         {
             @Html.HiddenFor(Model => Model.IdMateria)
 
             <div class="col-md-4">
                 <div class="col-md-12">
                     @Html.LabelFor(model => model.Nombre)
-                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetras(this, event)", onblur = "return soloLetras(this, event)", @id = "txtNombre" })
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetrasEvent(this, event)", onblur = "return soloLetrasThis(this)", @id = "txtNombre" })
                     <span></span>
                 </div>
-                <div class="col-md-12">
+                @*                 <div class="col-md-12">
                     @Html.LabelFor(model => model.Nombre, "Apellido Paterno")
                     @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetras(this, event)", @id = "txtDescripcion" })
                     <span></span>
 
-                </div>
-                @* <div class="col-md-12">
-                    @Html.LabelFor(model => model.Creditos)
-                    @Html.TextBoxFor(model => model.Creditos, "{0:#.#}", new { @class = "form-control" })
                 </div> *@
+                <div class="col-md-12">
+                    @Html.LabelFor(model => model.Creditos)
+                    @Html.TextBoxFor(model => model.Creditos, "{0:#.#}", new { @class = "form-control", onkeypress = "return soloNumeros(this, event)", onblur = "return soloNumeros(this, event)" })
+                    <span></span>
+                </div>
 
             </div>
             <div class="col-md-4">
                 <div class="col-md-12 mt-2">
                     @Html.LabelFor(model => model.Costo)
-                    @Html.TextBoxFor(model => model.Costo, "{0:#.#}", new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.Costo, "{0:#.#}", new { @class = "form-control", onkeypress = "return soloNumeros(this, event)", onblur = "return soloNumeros(this, event)" })
+                    <span></span>
                 </div>
 
-                @*  <div class="col-md-12 mt-2">
+                <div class="col-md-12 mt-2">
                     @Html.LabelFor(model => model.Semestre)
-                    @Html.DropDownListFor(model => model.Semestre.IdSemestre, new SelectList(Model.Semestre.Semestres, "IdSemestre", "Nombre"), "Seleccione un semestre", new { @class = "form-control" })
-
-                </div> *@
+                    @Html.DropDownListFor(model => model.Semestre.IdSemestre, new SelectList(Model.Semestre.Semestres, "IdSemestre", "Nombre"), "Seleccione un semestre", new { @class = "form-control", onchange = "validarDDL(this)" })
+                    <span></span>
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col-md-6">
@@ -56,50 +58,120 @@
                 <div class="col-md-6">
                     <input type="text" onblur="validarCorreo(this)" />
                 </div>
-
             </div>
 
         }
     </div>
 </div>
 
-
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
-    function soloLetras(input, event){  // Nombre, Apellido Paterno, Apellido Materno
-            
+    $(document).ready(function() {
+        $("#formulario").on( "submit", function(event) {
+            var correct = true;
+            // VALIDAR TODOS MIS CAMPOS USANDO LAS FUNCIONES
+            // var letras = soloLetrasThis($("#txtNombre"))
+            // var ddl = validarDDL($("#Semestre_IdSemestre"))
+            console.log(ddl)
+            if(!validarDDL($("#Semestre_IdSemestre"))){
+                correct = false;
+            }
+            if(!correct){        
+                event.preventDefault();
+                return false;
+            }
+        });
+    });
+
+    function validarFormulario(){
+
+    }
+
+    function soloLetrasEvent(input, event){  // Nombre, Apellido Paterno, Apellido Materno
         // ENCONTRAR A EL CONTENEDOR DE MI ETIQUETA INPUT
         var div = $(input).closest("div");
         var span = div.children("span");
         // div.find("input");
         // div.children("span")
 
-        if(event.type == "keypress"){
-            console.log("keypess")
-            var regex = /^[a-zA-Z ]+$/
-           if(regex.test(event.key)){
-               console.log("Paso la regex")
+        console.log(event);
+
+        var regex = /^[a-zA-Z ]+$/
+
+        if(regex.test(event.key)){
                $(input).css("border", "2px solid green");
                span.text("").removeClass("text-danger");
                return true
            }else{
-                console.log("No paso")
+               $(input).css("border", "2px solid red");
+               span.text("Solo se acpetan letras").addClass("text-danger");
+               return false;
+           }
+    }
+
+        function soloLetrasThis(input){  // Nombre, Apellido Paterno, Apellido Materno
+        // ENCONTRAR A EL CONTENEDOR DE MI ETIQUETA INPUT
+        var div = $(input).closest("div");
+        var span = div.children("span");
+        // div.find("input");
+        // div.children("span")
+
+
+        if($(input).val() === ""){
+             $(input).css("border", "2px solid red");
+            span.text("No se pueden dejar este campo vacio").addClass("text-danger");
+
+            return false;
+        }
+
+        console.log(input);
+        var regex = /^[a-zA-Z ]+$/
+            // Validar todo el texto completo
+           if(regex.test($(input).val())){
+               $(input).css("border", "2px solid green");
+               return true
+           }else{
+               $(input).css("border", "2px solid red");
+               return false;
+           }    
+    }
+
+    function soloNumeros(input, event){ 
+        var div = $(input).closest("div");
+        var span = div.children("span");
+        var regex = /^[0-9]+$/
+
+        if(event.type == "keypress"){
+            // valida caracter por caracter
+           if(regex.test(event.key)){
+               $(input).css("border", "2px solid green");
+               span.text("").removeClass("text-danger");
+               return true
+           }else{
                $(input).css("border", "2px solid red");
                span.text("Solo se acpetan letras").addClass("text-danger");
                return false;
            }
         }else if(event.type == "blur"){
-                        console.log("blur")
             // Validar todo el texto completo
+           if(regex.test($(input).val())){
+               $(input).css("border", "2px solid green");
+               span.text("").removeClass("text-danger");
+               return true
+           }else{
+               $(input).css("border", "2px solid red");
+               span.text("Solo se acpetan letras").addClass("text-danger");
+               return false;
+           }
+
+
         }
 
     }
-
     // Validacion para numeros  Celular y telefono
     // Validacion para username
     // validacion CURP, correo  evento onblur
-
-
-        function validarCorreo(input){
+    function validarCorreo(input){
             console.log("@@")
             console.log(input)
 
@@ -116,7 +188,26 @@
        }
     }
 
+    function validarDDL(DDL){
+        var div = $(DDL).closest("div");
+        var span = div.children("span");
+        // == string = "2"    int 2
+        // ===   int "2"   int "2"
+ 
+        if($(DDL).val() === ""){
+            $(DDL).css("border", "2px solid red");
+            span.text("Selecciona un semestre").addClass("text-danger");
+            return false;
+        }
+
+        $(DDL).css("border", "2px solid green");
+        span.text("").removeClass("text-danger");
+        return true;
+    }
+
 
 
 
 </script>
+
+
