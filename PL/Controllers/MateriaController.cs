@@ -28,5 +28,27 @@ namespace PL.Controllers
 
             return View(materia);
         }
+        [HttpPost]
+        public IActionResult Form(ML.Materia materia)
+        {
+            bool formulario = ModelState.IsValid;
+
+            if (formulario)
+            {
+                Console.WriteLine("Formulario valido");
+            }
+            else
+            {
+                Console.WriteLine("Formulario incorrecto");
+            }
+
+            ML.Result result = BL.Materia.GetAllSemestre();
+            if (result.Correct)
+            {
+                materia.Semestre.Semestres = result.Objects;
+            }
+
+            return View(materia);
+        }
     }
 }

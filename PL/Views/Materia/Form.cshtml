@@ -16,6 +16,7 @@
                     @Html.LabelFor(model => model.Nombre)
                     @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetrasEvent(this, event)", onblur = "return soloLetrasThis(this)", @id = "txtNombre" })
                     <span></span>
+                    @Html.ValidationMessageFor(model => model.Nombre, )
                 </div>
                 @*                 <div class="col-md-12">
                     @Html.LabelFor(model => model.Nombre, "Apellido Paterno")
