@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link href="~/css/jquery-ui.css" rel="stylesheet"/>
+
 <div class="container">
     <h1>Formulario Usuarios</h1>
     <div class="row">
@@ -16,7 +18,7 @@
                     @Html.LabelFor(model => model.Nombre)
                     @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", onkeypress = "return soloLetrasEvent(this, event)", onblur = "return soloLetrasThis(this)", @id = "txtNombre" })
                     <span></span>
-                    @Html.ValidationMessageFor(model => model.Nombre, )
+                    @Html.ValidationMessageFor(model => model.Nombre)
                 </div>
                 @*                 <div class="col-md-12">
                     @Html.LabelFor(model => model.Nombre, "Apellido Paterno")
@@ -58,6 +60,7 @@
             <div class="row mt-3">
                 <div class="col-md-6">
                     <input type="text" onblur="validarCorreo(this)" />
+                    <input type="text" id="datepicker">
                 </div>
             </div>
 
@@ -65,9 +68,35 @@
     </div>
 </div>
 
+
+
+
 <script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery-ui.js"></script>
+
 <script>
+
+     DatePicker();
+    function DatePicker(){
+        $("#datepicker").datepicker();
+    }
+
+
+
+
+    // Datepicker();
+    // function Datepicker(){
+    //      $("#myDatepicker").datepicker();
+    //         $("#myDatepicker").datepicker({
+    //     dateFormat: 'dd-mm-yy', 
+    //     changeMonth: true,     
+    //     changeYear: true,      
+    //     yearRange: '1900:2050'  
+    // });
+    // }
+
     $(document).ready(function() {
+       
         $("#formulario").on( "submit", function(event) {
             var correct = true;
             // VALIDAR TODOS MIS CAMPOS USANDO LAS FUNCIONES

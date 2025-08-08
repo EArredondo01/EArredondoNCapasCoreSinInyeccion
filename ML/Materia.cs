@@ -24,5 +24,6 @@ namespace ML
         public decimal Costo { get; set; }
         public ML.Semestre? Semestre { get; set; }
         public List<object>? Materias { get; set; }
+        public string? FechaNacimiento { get; set; }
     }
 }

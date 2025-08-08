@@ -4,8 +4,24 @@ namespace PL.Controllers
 {
     public class MateriaController : Controller
     {
+
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public MateriaController(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
+
         public IActionResult GetAll()
         {
+            string ruta =_webHostEnvironment.WebRootPath;
+            string path = "";
+            path = Path.Combine(ruta, "documentos");
+
+            var UploadPath = Server.MapPath("~/documentos/txt");
+
+
             ML.Materia materia = new ML.Materia();
             ML.Result result = BL.Materia.GetAll();
             if (result.Correct)

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{4BE04D52-43C2-4BF3-870D-D0C2CABF286A}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DL", "DL\DL.csproj", "{C8768F11-272C-41CD-B250-0F24A62CD3C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ML", "ML\ML.csproj", "{F1044D1C-6242-41D2-B329-C15638F1ED4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLTxt", "PLTxt\PLTxt.csproj", "{0E407D2A-CA61-45AE-A270-EE8C97ED7AEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F1044D1C-6242-41D2-B329-C15638F1ED4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1044D1C-6242-41D2-B329-C15638F1ED4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1044D1C-6242-41D2-B329-C15638F1ED4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E407D2A-CA61-45AE-A270-EE8C97ED7AEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E407D2A-CA61-45AE-A270-EE8C97ED7AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E407D2A-CA61-45AE-A270-EE8C97ED7AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E407D2A-CA61-45AE-A270-EE8C97ED7AEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
